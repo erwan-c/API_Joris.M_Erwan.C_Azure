@@ -4,8 +4,7 @@
   "main": "Node.js/index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon start",
-    "test": "mocha  ./tests/*.test.js"
+    "start": "nodemon start"
   },
   "author": "",
   "license": "ISC",
