@@ -38,7 +38,7 @@ https://editor.swagger.io/
 Vous trouverez le github à l'adresse :
 
 ```bash
-https://editor.swagger.io/
+https://github.com/erwan-c/API_Joris.M_Erwan.C_Azure/tree/main
 ```
 
 
