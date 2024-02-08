@@ -12,7 +12,7 @@ const deleteUser = async (req, res) => {
       res.status(200).send(removed);
     }
     else{
-      res.status(403).send('Vous ne disposez pas des droits pour modifier cette personne');
+      res.status(403).send('Vous ne disposez pas des droits pour supprimer cette personne');
     }
 
 };

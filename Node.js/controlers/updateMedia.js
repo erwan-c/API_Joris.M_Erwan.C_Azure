@@ -13,14 +13,14 @@ const updateMedia = async (req, res) => {
       console.log(titre);
       res.status(200).send(modifMedia);
     } else {
-      res.status(404).send("Vous n'avez pas les droits de modifier ce média");
+      res.status(400).send("Vous n'avez pas les droits de modifier ce média");
     }
   } catch (error) {
     if (error.kind && error.kind === "ObjectId") {
-      res.sendStatus(404);
+      res.sendStatus(404).send("Média non trouvé");
       return;
     }
-    res.sendStatus(500);
+    res.sendStatus(500).send("Erreur Serveur");
   }
 };
 

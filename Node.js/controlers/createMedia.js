@@ -1,9 +1,7 @@
 import * as yup from "yup";
-import Media from "../models/media.js";
 import { BlobServiceClient } from "@azure/storage-blob";
 import "dotenv/config";
 import { MongoClient } from "mongodb";
-
 
 const mongodbUri = process.env.MONGODB_URI;
 const accountName = process.env.ACCOUNT_NAME;

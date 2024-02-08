@@ -1,536 +1,220 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info:
-  title: RAILROAD
+  title: 4DESA
+  version: 1.0.0
   description: |-
-    RailRoad ltd est une entreprise qui vise à produire la meilleure expérience pour vos déplacements locaux et nationaux. Cette application vous permettra de pouvoir réserver un billet de train afin de vous déplacer où vous souhaiter et vous permettra de consulter à n'importe quel moment les trains en services ainsi que les gares ouvertes.
+    Link Up est une startup qui vise à fournir une plateforme de médias sociaux flexible aux créateurs de contenu. Ce système backend évolutif et efficace peut être intégré à n'importe quelle interface frontale, offrant une expérience de gestion de contenu transparente.La plateforme de Link Up répond à la demande croissante de solutions de médias sociaux personnalisables et évolutives dans l'espace du contenu numérique.
 
-        Les Identifiants seront visibles lors du READ de l'entité désirée.
-    
-
-
-      
-
+        Les Identifiants seront visibles lors du READ des entités
 paths:
-  /train/update/{trainId}:
-    put:
+  /media/read:
+    get:
+      summary: Récupérer tous les médias
       tags:
-        - Train
-      summary: Mettre à jour un train existants
-      description: Mettre à jour un train existant grâce à son ID
-      requestBody:
-        description: Mettre à jour un train existant
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/train'
-          
-        required: true
+        - Media
       responses:
         '200':
-          description: Train modifié
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/train'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/train'
- 
-        '404':
-          description: Les droits qui vous sont attribués ne sont pas suffisants
+          description: Retourne la liste de média
+  /media/create:
+    post:
+      summary: Créer un média
+      tags:
+        - Media
       
-
-  /train/create:
-    post:
-      tags:
-        - Train
-      summary: Créer un train
-      description: Créer un train
       requestBody:
-        description: Créer un train
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/train'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/train'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/train'
         required: true
+        content:
+          multipart/form-data:
+            schema:
+             type: object
+             properties:
+              image:
+                type: object
+                description: Insérer l'image
+              titre:
+                type: string
+                description: Titre du média
+              description:
+                type: string
+                description: Description du média
+      
       responses:
         '201':
-          description: Train créé
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/train'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/train'
-        '404': 
-          description : Les droits qui vous sont attribués ne sont pas suffisants
-        '405':
-          description: Entrée invalide
-
-  /train/delete/{trainId}:
-    delete:
-      tags:
-        - Train
-      summary: Suprimer un train existant
-      description: Suprimer un train existant grâce à son ID
-      parameters:
-        - name: trainID
-          in: path
-          description: Train id à supprimer
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: Train supprimé
-        '404':
-          description: Les droits qui vous sont attribués ne sont pas suffisants
-
-  /train/read:
-    get:
-      tags:
-        - Train
-      summary: Visualiser les différents trains existants 
-      description: Visualiser les différents trains existants 
-      responses:
-        '200':
-          description: Affichage des trains
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/train' 
+          description: Le fichier a été téléchargé avec succès.
+        '400':
+          description: Veuillez fournir un fichier.
         '500':
-          description: Erreur
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/train'          
-  
-  /thistrain/{trainId}}:
-    get:
-      tags:
-        - Train
-      summary:  Consulter un train en particulier
-      description:  Permet de consulter un train en particulier grâce à son ID
-      requestBody:
-        description: Consulter les informations concernant le train désiré 
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/train'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/train'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/train'
-        required: true
-      responses:
-        '200':
-          description: Affichage du train désiré 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/train'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/train'
-        
-        '500':
-          description: Erreur
-        
+          description: Erreur serveur
 
-
-  /user/update/{UserId}:
+  /media/update/{id}:
     put:
+      summary: Mettre à jour un média
       tags:
-        - User
-      summary: Mettre à jour un utilisateur existant
-      description: Mettre à jour un utilisateur existant grâce à son ID
-      requestBody:
-        description: Mettre à jour un utilisateur existant
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/user'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/user'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/user'
-        required: true
-      responses:
-        '200':
-          description: User modifié
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/user'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/user'
-        '404':
-          description: Les droits qui vous sont attribués ne sont pas suffisants
-        
-          
-
-  /user/create:
-    post:
-      tags:
-        - User
-      summary: Créer un utilisateur
-      description: Créer un utilisateur
+        - Media
       parameters:
-        - name: User
-          in: query
+        - in: path
+          name: id
+          description: ID du média à mettre à jour
           required: true
           schema:
-            type: object
-            properties:
-              email:
-                type: string
-                format: email
-              pseudo:
-                type: string
-              password:
-                type: string
+            type: string
       requestBody:
-        description: Créer un utilisateur
+        required: false
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/user'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/user'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/user'
-        required: true
+             type: object
+             properties:
+              titre:
+                type: string
+                description: Titre du média
+              description:
+                type: string
+                description: Description du média
       responses:
-        '201':
-          description: Utilisateur créé
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/user'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/user'
+        '200':
+          description: Média mis à jour avec succès
+        '400':
+          description: Vous n'avez pas les droits de modifier ce média
         '404':
-          description: Vos informations entrées sont incorrectes
-
-  /user/delete/{UserId}:
+          description: Média non trouvé
+        '500':
+          description: Erreur Serveur
+  /media/delete/{id}:
     delete:
+      summary: Supprimer un média
       tags:
-        - User
-      summary: Suprimer un utilisateur existant
-      description: Suprimer un utilisateur existant grâce à son ID
+        - Media
       parameters:
-        - name: UserID
-          in: path
-          description: User id à supprimer
+        - in: path
+          name: id
+          description: ID du média à supprimer
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '200':
-          description: Utilisateur supprimé
+          description: Retourne le média supprimé
+        '400':
+          description: Vous n'avez pas les droits de supprimer ce média
         '404':
-          description: Les droits qui vous sont attribués ne sont pas suffisants
+          description: Média non trouvé
+        '500':
+          description: Erreur Serveur
           
-
   /user/read:
     get:
+      summary: Récupérer tous les users
       tags:
         - User
-      parameters:
-        - name: User
-          in: query
-          required: true
-          schema:
-            type: object
-            properties:
-              email:
-                type: string
-                format: email
-              pseudo:
-                type: string
-              password:
-                type: string
-              role:
-                type: string
-                enum: ['user', 'employee', 'admin']
-      summary: Visualiser les différents utilisateurs existants 
-      description: Visualiser les différents utilisateurs existants 
       responses:
         '200':
-          description: Affichage des utilisateurs
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/user'
-        '401':
-          description: Les droits qui vous sont attribués ne sont pas suffisants
-          
-  /user/authentification:
-    get:
-      tags:
-        - User
-      summary: Authentification des utilisateurs
-      description: Permet d'authentifier un utilisateur et de lui attribuer un jeton au travers d'un cookies 
-      responses:
-        '200':
-          description: Authentification effectuée avec succès, le jeton a été attribué
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/jeton'
-
-        '400':
-          description: Erreur d'authentification
-        
-      
-  /gare/update/{gareId}:
-    put:
-      tags:
-        - Gare
-      summary: Mettre à jour une Gare existante
-      description: Mettre à jour une Gare existante grâce à son ID
-      requestBody:
-        description: Mettre à jour une Gare existante
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/gare'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/gare'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/gare'
-        required: true
-      responses:
-        '200':
-          description: Gare modifié
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/gare'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/gare'
-        
-        '404':
-          description: Les droits qui vous sont attribués ne sont pas suffisants
-        
-
-  /gare/create:
+          description: Retourne la liste de user
+  /user/create:
     post:
+      summary: Créer un utilisateur
       tags:
-        - Gare
-      summary: Créer une Gare
-      description: Créer une Gare
+        - User
       requestBody:
-        description: Créer une Gare
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/gare'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/gare'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/gare'
-        required: true
+              type: object
+              properties:
+                email:
+                 type: string
+                 description: Mail de l'utilisateur
+                pseudo:
+                 type: string
+                 description: Pseudo de l'utilisateur
+                password:
+                 type: string
+                 description: Mot de passe de l'utilisateur
+                priv:
+                  type: boolean
+                  description: Définit si le profil est privé ou public
       responses:
         '201':
-          description: Gare créée
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/gare'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/gare'
+          description: Créé avec succès
         '404':
-          description: Les droits qui vous sont attribués ne sont pas suffisants
-
-  /gare/delete/{gareId}:
-    delete:
+          description: Vos informations entrées sont incorrectes
+  
+  /user/authentification:
+    post:
+      summary: Authentifier un utilisateur
       tags:
-        - Gare
-      summary: Suprimer une gare existante
-      description: Suprimer une gare existante grâce à son ID
-      parameters:
-        - name: gareID
-          in: path
-          description: ID de la gare pour supprimer
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description : Gare supprimée
-        '404':
-          description: Les droits qui vous sont attribués ne sont pas suffisants
-
-  /gare/read:
-    get:
-      tags:
-        - Gare
-      summary: Visualiser les différentes gares existantes 
-      description: Visualiser les différentes gares existantes
-      responses:
-        '200':
-          description: Affichage des gares existantes
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/gare'
-        '500':
-          description: Erreur
-           
-
-  /thisgare/{gareId}:
-    get:
-      tags:
-        - Gare
-      summary: Consulter une gare en particulier 
-      description:  Permet de consulter une gare en particulier grâce à son ID
+        - User
       requestBody:
-        description: Consulter les informations concernant la gare désirée
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/train'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/train'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/train'
-        required: true
+              type: object
+              properties:
+                pseudo:
+                 type: string
+                 description: Pseudo de l'utilisateur
+                password:
+                 type: string
+                 description: Mot de passe de l'utilisateur
       responses:
         '200':
-          description: Affichage de la gare désirée 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/train'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/train'
-        '500':
-          description: Erreur
-        
-
-
-
-
-components:
-  schemas:
-
-    jeton:
-      type: object
-      properties:
-        token:
-          type: string
-          example: "token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjc1NTQzYmIxZjgzYzcyNTI1M2MyNyIsInBzZXVkbyI6InZ2ZGQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzMwMjI2NzksImV4cCI6MTY3MzEwOTA3OX0.MYAZJ-8DEn9zYZJ4Cq3sxJCQ3LlUP27Clhf12xJGptE"
-
-
-    user:
-      required:
-        - email
-        - pseudo
-        - password
-        - role
-      type: object
-      properties:
-        email:
-          type: string
-          example: admin@admin.com
-        pseudo:
-          type: string
-          example: 'administrateur2'
-        password:
-          type: string
-          example: '12345'
-        role: 
-          type: string
-          example: 'admin'
-            
-
-
-    train:
-      required:
-        - nametrain
-        - start_station
-        - end_station
-        - time_of_departure
-      type: object
-      properties:
-        nametrain:
-          type: string
-          example: tchoutchou
-        start_station:
-          type: number
-          example: 2
-        end_station:
-          type: number
-          example: 6
-        time_of_departure: 
-          type: string
-          example: 17h23
- 
-
-    gare:
-      required:
-        - namegare
-        - open_hour
-        - close_hour
-        - image
-      type: object
-      properties:
-        namegare:
-          type: string
-          example: Gare du Nord
-        open_hour:
-          type: string
-          example: 9h
-        close_hour:
-          type: string
-          example: 22h
-        image: 
-          type: string
-          example: gare.png
-
-
-    authentification:
-      
-      securitySchemes:
-        bearerAuth:
-        type: http
-        scheme: bearer
-        bearerFormat: JWTpurposes
-        security:
-         - bearerAuth: []
-
-     
+          description: Authentification réussie
+        '400':
+          description: Mot de passe incorrect / Utilisateur inexistant / en attente du nom d'utilisateur et du mot de passe
+          
+  /user/update/{id}:
+    put:
+      summary: Mettre à jour un user
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: id
+          description: ID du user à mettre à jour
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+             type: object
+             properties:
+                email:
+                 type: string
+                 description: Mail de l'utilisateur
+                pseudo:
+                 type: string
+                 description: Pseudo de l'utilisateur
+                password:
+                 type: string
+                 description: Mot de passe de l'utilisateur
+      responses:
+        '200':
+          description: user mis à jour avec succès
+        '403':
+          description: Vous ne disposez pas des droits pour modifier cette personne
+        '404':
+          description: user non trouvé        
+  /user/delete/{id}:
+    delete:
+      summary: Supprimer un user
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: id
+          description: ID du user à supprimer
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: User supprimé avec succès
+        '403':
+          description: Vous ne disposez pas des droits pour supprimer cette personne
+        '404':
+          description: User non trouvé

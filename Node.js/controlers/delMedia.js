@@ -13,15 +13,15 @@ const delMedia = async (req, res) => {
       }
       res.status(200).send(deleted);
     } else {
-      res.status(404).send("Vous n'avez pas les droits de supprimer ce média");
+      res.status(400).send("Vous n'avez pas les droits de supprimer ce média");
     }
   } catch (error) {
     console.log(req.params.id);
     if (error.kind && error.kind === "ObjectId") {
-      res.sendStatus(404);
+      res.sendStatus(404).send("Média non trouvé");
       return;
     }
-    res.sendStatus(500);
+    res.sendStatus(500).send("Erreur serveur");
     console.log(error);
   }
 };

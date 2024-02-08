@@ -9,7 +9,6 @@ const fileExtLimiter = (allowedExtArray) => {
             fileExtensions.push(path.extname(files[key].name))
         })
 
-        // Are the file extension allowed? 
         const allowed = fileExtensions.every(ext => allowedExtArray.includes(ext))
 
         if (!allowed) {
